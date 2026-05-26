@@ -41,7 +41,7 @@
   .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
   .eyebrow .dot{color:var(--accent-ink);background:var(--accent);padding:0 3px}
   h1.big{font-family:'Archivo Expanded';font-weight:900;font-size:clamp(3.4rem,13vw,11rem);line-height:.82;letter-spacing:-.03em;text-transform:uppercase;margin:14px 0 0}
-  h1.big .y{color:var(--accent-ink);background:var(--accent);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  h1.big .y{color:var(--accent-ink);background:linear-gradient(180deg,transparent 0 18%,var(--accent) 18% 100%);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
   .sub-rail{display:flex;flex-wrap:wrap;gap:14px 40px;margin-top:30px;padding-top:18px;border-top:1px solid var(--line);
     font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink)}
   .sub-rail .blurb{max-width:560px;text-transform:none;letter-spacing:0;font-family:'Archivo';font-size:14px;color:#333;line-height:1.55}
@@ -143,15 +143,8 @@ const posts = [
     date: "May 2026",
     title: "The West End Pile-Up",
     file: "west-end-cumulative.html",
-    tags: ["Urban Planning", "Housing"],
+    tags: ["Urban Planning", "Housing", "Marketown", "Development"],
     blurb: "~4,000 apartments are landing in a 600-metre stretch of the West End. Is anyone actually planning for the cumulative impact — and what happens to all these towers when the market turns? A map, a pipeline ledger, and the structural gap in who's responsible."
-  },
-  {
-    date: "May 2026",
-    title: "The Western Gateway Reckoning",
-    file: "marketown-timeline.html",
-    tags: ["Marketown", "Development"],
-    blurb: "Two billion-dollar visions — Marketown West and Newcastle Quay — are reshaping opposite ends of the CBD at once. An interactive timeline of how we got here, the planning sleight-of-hand behind the height limits, and the question every future resident should ask: how long do I live on a building site?"
   }
 ];
 
