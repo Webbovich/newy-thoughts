@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The West End Pile-Up — Newy Thoughts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Expanded:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0d0d;--paper:#ffffff;--accent:#c4f000;--accent-ink:#0d0d0d;
+    --grey:#8a8a8a;--grey-2:#bcbcbc;--line:#0d0d0d;--hair:#dcdcdc;--wash:#f5f5f5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+
+  .topbar{border-bottom:1px solid var(--line);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--paper);z-index:50}
+  .topbar .mark{font-family:'Archivo Expanded';font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .topbar .mark .y{color:var(--accent-ink);background:var(--accent);padding:0 4px}
+  .topbar .back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  .topbar .back:hover{border-color:var(--accent);border-bottom-width:3px}
+  .topbar .back::before{content:"← "}
+
+  header{padding:64px 32px 0;max-width:1180px;margin:0 auto}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);display:inline-block;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  h1{font-family:'Archivo Expanded';font-weight:900;font-size:clamp(2.6rem,8.4vw,6.2rem);line-height:.86;letter-spacing:-.03em;text-transform:uppercase;margin:16px 0 0}
+  .standfirst{font-size:clamp(1rem,1.8vw,1.3rem);font-weight:400;max-width:760px;margin-top:26px;line-height:1.5;color:#333}
+  .standfirst b{font-weight:700;color:var(--ink)}
+  .meta-row{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 30px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);border-top:1px solid var(--line);border-bottom:1px solid var(--hair);padding:14px 0}
+  .meta-row b{color:var(--ink);font-weight:700}
+
+  .tldr{background:var(--ink);color:var(--paper);max-width:1180px;margin:34px auto 0;padding:32px;border-top:3px solid var(--accent)}
+  .tldr h4{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+  .tldr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px 32px}
+  .tldr-item{font-size:.92rem;color:#dcdcdc;padding-left:16px;border-left:2px solid var(--accent);line-height:1.55}
+  .tldr-item b{color:#fff;font-weight:700;display:block;font-family:'Archivo Expanded';margin-bottom:5px;font-size:.92rem;text-transform:uppercase;letter-spacing:-.01em}
+
+  .bignum{max-width:1180px;margin:38px auto 0;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border:1px solid var(--line)}
+  .bn{padding:22px 20px;border-right:1px solid var(--hair)}
+  .bn:last-child{border-right:none}
+  .bn .n{font-family:'Archivo Expanded';font-weight:800;font-size:2.2rem;line-height:1;color:var(--ink)}
+  .bn .n.acc{color:var(--ink);background:linear-gradient(var(--accent),var(--accent)) no-repeat;background-size:100% .32em;background-position:0 86%}
+  .bn .l{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;color:var(--grey);line-height:1.4}
+
+  section{max-width:1180px;margin:0 auto;padding:58px 32px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink);font-weight:700;letter-spacing:.1em;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .sec-title{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(1.4rem,3.2vw,2.2rem);text-transform:uppercase;letter-spacing:-.01em;line-height:1}
+  .sec-intro{font-size:1.05rem;font-weight:400;max-width:820px;margin:20px 0 12px;color:#333;line-height:1.6}
+  .sec-intro b{font-weight:700}.sec-intro em{font-style:italic}
+
+  .mapwrap{margin-top:26px;border:1px solid var(--line);padding:8px;position:relative}
+  .mapwrap svg{width:100%;height:auto;display:block}
+  .maphint{font-family:'JetBrains Mono';font-size:11px;color:var(--grey);letter-spacing:.04em;margin-top:10px;text-align:center;text-transform:uppercase}
+  .pin{cursor:default}
+  .pin circle{transition:all .2s}
+  .pin:hover circle{stroke:var(--accent);stroke-width:3}
+  .pin text{font-family:'JetBrains Mono';font-weight:700;fill:#fff;pointer-events:none}
+  .infobox{border:1px solid var(--line);border-left:4px solid var(--accent);padding:20px 24px;margin-top:14px;min-height:96px;transition:all .2s;background:var(--wash)}
+  .infobox .ib-t{font-family:'Archivo Expanded';font-weight:800;font-size:1.15rem;text-transform:uppercase;letter-spacing:-.01em}
+  .infobox .ib-m{font-family:'JetBrains Mono';font-size:11px;color:var(--ink);letter-spacing:.06em;margin:6px 0 10px;display:inline-block;border-bottom:2px solid var(--accent);padding-bottom:1px}
+  .infobox .ib-d{font-size:.94rem;color:#333}
+  .infobox.idle .ib-t{color:var(--grey)}
+
+  .ledger{margin-top:26px;width:100%;border-collapse:collapse;font-size:.88rem;border:1px solid var(--line)}
+  .ledger th{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:13px 14px;background:var(--ink);color:var(--paper);font-weight:500}
+  .ledger td{padding:11px 14px;border-top:1px solid var(--hair);vertical-align:top}
+  .ledger tr:hover td{background:var(--wash)}
+  .ledger .proj{font-weight:700}
+  .ledger .st{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;white-space:nowrap;display:inline-block;border:1px solid}
+  .st.build{border-color:var(--ink);background:var(--ink);color:#fff}
+  .st.appr{border-color:var(--ink);color:var(--ink)}
+  .st.prop{border-color:var(--accent);background:var(--accent);color:var(--accent-ink)}
+  .ledger tfoot td{border-top:2px solid var(--ink);font-weight:800;font-family:'Archivo Expanded';background:var(--wash);text-transform:uppercase;font-size:.82rem}
+  .tbl-scroll{overflow-x:auto}
+
+  .stack{display:grid;margin-top:24px;border:1px solid var(--line)}
+  .layer{padding:22px 24px;display:grid;grid-template-columns:130px 1fr;gap:20px;align-items:start;border-bottom:1px solid var(--hair);transition:background .2s}
+  .layer:last-child{border-bottom:none}
+  .layer:hover{background:var(--wash)}
+  .layer .who{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:700;line-height:1.5}
+  .layer h4{font-family:'Archivo Expanded';font-weight:700;font-size:1.02rem;margin-bottom:5px;text-transform:uppercase;letter-spacing:-.01em}
+  .layer p{font-size:.92rem;color:#333}
+  .layer.gap{background:var(--ink);color:var(--paper)}
+  .layer.gap:hover{background:var(--ink)}
+  .layer.gap .who{color:var(--accent)}
+  .layer.gap p{color:#dcdcdc}.layer.gap b{color:#fff}
+
+  .callout{border:1px solid var(--line);border-left:4px solid var(--accent);padding:24px 26px;margin-top:24px;background:var(--wash)}
+  .callout.teal{border-left-color:var(--ink)}
+  .callout .ctag{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);font-weight:700;margin-bottom:10px;display:inline-block;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .callout.teal .ctag{color:var(--ink)}
+  .callout p{font-size:.95rem;color:#333;margin-bottom:9px}
+  .callout p:last-child{margin-bottom:0}
+  .callout b{color:var(--ink)}
+
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:24px;border:1px solid var(--line)}
+  .fcard{padding:24px 20px;position:relative;border-right:1px solid var(--hair)}
+  .fcard:last-child{border-right:none}
+  .fcard .step{font-family:'Archivo Expanded';font-weight:900;font-size:2rem;color:var(--hair);position:absolute;top:12px;right:16px;line-height:1}
+  .fcard h4{font-family:'Archivo Expanded';font-weight:700;font-size:1rem;margin-bottom:8px;position:relative;z-index:1;max-width:80%;text-transform:uppercase;letter-spacing:-.01em}
+  .fcard p{font-size:.88rem;color:#333}
+
+  .verdict{background:var(--ink);color:var(--paper);padding:30px 32px;margin-top:24px;border-top:3px solid var(--accent)}
+  .verdict h4{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .verdict p{font-size:1rem;line-height:1.6;margin-bottom:12px;color:#e4e4e4}
+  .verdict p:last-child{margin-bottom:0}
+  .verdict b{color:#fff;font-weight:600}
+
+  footer{max-width:1180px;margin:72px auto 0;padding:32px 32px 60px;border-top:1px solid var(--line)}
+  .foot-note{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.04em;color:var(--grey);line-height:1.8;max-width:760px}
+  .foot-note b{color:var(--ink)}
+  .srcgrid{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+  .srcgrid a{font-family:'JetBrains Mono';font-size:10.5px;color:var(--ink);text-decoration:none;padding:11px 13px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);transition:all .15s;word-break:break-word;line-height:1.45}
+  .srcgrid a:hover{background:var(--accent);color:var(--accent-ink)}
+  .srcgrid a::before{content:"→ ";color:var(--ink)}
+  .srcgrid a:hover::before{color:var(--accent-ink)}
+  .backlink{max-width:1180px;margin:30px auto 0;padding:0 32px}
+  .backlink a{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .backlink a::before{content:"← "}
+
+  @media(max-width:680px){
+    .layer{grid-template-columns:1fr;gap:6px}
+    .tldr-item{border-left:none;padding-left:0}
+    .bn{border-right:none;border-bottom:1px solid var(--hair)}
+    .fcard{border-right:none;border-bottom:1px solid var(--hair)}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="mark" href="index.html">NEWY <span class="y">THOUGHTS</span></a>
+  <a class="back" href="index.html">Index</a>
+</div>
+
+<header>
+  <div class="kicker">02 / Newcastle West End · Cumulative Impact · May 2026</div>
+  <h1>The West End<br>Pile-Up</h1>
+  <p class="standfirst">You asked whether anyone is planning for 2,500 apartments landing in a 400-metre radius. The honest answer: the real number is closer to <b>4,000</b>, there are plans that <em>name</em> this precinct — and there's a structural gap sitting exactly where cumulative impact should be assessed. Here's the map, the ledger, the governance stack, and what a downturn actually does to the timeline.</p>
+  <div class="meta-row">
+    <span><b>The cluster:</b> ~600m of Hunter St + Marketown</span>
+    <span><b>Dwellings in play:</b> ~3,500–4,000</span>
+    <span><b>Governing plan:</b> Hunter Regional Plan 2041</span>
+    <span><b>The catch:</b> assessed project-by-project</span>
+  </div>
+</header>
+
+<div class="tldr">
+  <h4>The four answers, up front</h4>
+  <div class="tldr-grid">
+    <div class="tldr-item"><b>Is anyone planning cumulatively?</b>Yes on paper — Hunter Regional Plan 2041 names "Newcastle City Centre" as a high-growth, "infrastructure-first, sequenced" precinct. But the big projects go through the state SSD/HDA pathway one at a time.</div>
+    <div class="tldr-item"><b>What else is pencilled in?</b>A lot. The Store, Dairy Farmers, ONE, WaterVue, West Village / Waterscape, the Ibis site, ERA — a dense cluster, not just two projects.</div>
+    <div class="tldr-item"><b>Is rapid increase being managed?</b>Barely. The state compressed 62% of a 20-year target into 5 years; council says infrastructure funding isn't matching the front-loaded pace.</div>
+    <div class="tldr-item"><b>Do downturns stretch the builds?</b>Yes. Developers can hold approved sites, re-lodge revised DAs, or stage releases until margins return. Approval ≠ delivery.</div>
+  </div>
+</div>
+
+<div class="bignum">
+  <div class="bn"><div class="n acc">~4,000</div><div class="l">Approx dwellings in the<br>West End cluster</div></div>
+  <div class="bn"><div class="n">~600m</div><div class="l">Hunter St stretch holding<br>6+ towers under construction</div></div>
+  <div class="bn"><div class="n">11,100</div><div class="l">Dwellings the state wants<br>citywide by 2029</div></div>
+  <div class="bn"><div class="n acc">2,220</div><div class="l">Dwellings/yr that target<br>implies (≈2× peak rate)</div></div>
+  <div class="bn"><div class="n">62%</div><div class="l">Of a 20-yr target compressed<br>into just 5 years</div></div>
+</div>
+
+<section id="map">
+  <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">The Cluster, Mapped</span></div>
+  <p class="sec-intro">A schematic of the Newcastle West / West End development cluster strung along Hunter Street between the Interchange and the East End, with Marketown anchoring the western gateway. <b>Tap any pin</b> for the project, status and yield. This is not to exact scale — it's a relational diagram of how tightly these sit together.</p>
+
+  <div class="mapwrap">
+    <svg viewBox="0 0 1000 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schematic map of Newcastle West End development cluster">
+      <defs>
+        <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+          <rect width="8" height="8" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="8" stroke="#eee" stroke-width="3"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="1000" height="58" fill="#0d0d0d"/>
+      <text x="20" y="34" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" letter-spacing="3">NEWCASTLE HARBOUR / HONEYSUCKLE</text>
+      <rect x="0" y="58" width="1000" height="382" fill="url(#hatch)"/>
+      <rect x="40" y="210" width="920" height="34" fill="#0d0d0d"/>
+      <text x="50" y="232" font-family="JetBrains Mono, monospace" font-size="13" fill="#ffffff" letter-spacing="2">HUNTER STREET — the ~600m spine →</text>
+      <line x1="40" y1="244" x2="960" y2="244" stroke="#0d0d0d" stroke-width="2" stroke-dasharray="2 6"/>
+      <rect x="90" y="58" width="26" height="382" fill="#dcdcdc"/>
+      <text x="103" y="90" font-family="JetBrains Mono, monospace" font-size="11" fill="#0d0d0d" letter-spacing="1" transform="rotate(90 103 90)">PARRY ST</text>
+      <rect x="820" y="270" width="140" height="46" fill="#0d0d0d"/>
+      <text x="890" y="298" font-family="JetBrains Mono, monospace" font-size="11" fill="#ffffff" text-anchor="middle" letter-spacing="1">INTERCHANGE</text>
+      <circle cx="150" cy="320" r="150" fill="none" stroke="#0d0d0d" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.55"/>
+      <text x="150" y="185" font-family="JetBrains Mono, monospace" font-size="10" fill="#0d0d0d" text-anchor="middle" letter-spacing="1">~400m radius</text>
+
+      <g class="pin" data-id="market"><circle cx="150" cy="320" r="26" fill="#c4f000"/><text x="150" y="325" font-size="13" text-anchor="middle" fill="#0d0d0d">MW</text></g>
+      <g class="pin" data-id="wv"><circle cx="300" cy="150" r="20" fill="#0d0d0d"/><text x="300" y="155" font-size="12" text-anchor="middle">WV</text></g>
+      <g class="pin" data-id="dairy"><circle cx="430" cy="150" r="20" fill="#0d0d0d"/><text x="430" y="155" font-size="12" text-anchor="middle">DF</text></g>
+      <g class="pin" data-id="one"><circle cx="560" cy="150" r="18" fill="#0d0d0d"/><text x="560" y="155" font-size="12" text-anchor="middle">ONE</text></g>
+      <g class="pin" data-id="store"><circle cx="700" cy="150" r="22" fill="#0d0d0d"/><text x="700" y="155" font-size="12" text-anchor="middle">STR</text></g>
+      <g class="pin" data-id="wvue"><circle cx="380" cy="350" r="17" fill="#0d0d0d"/><text x="380" y="355" font-size="11" text-anchor="middle">WVu</text></g>
+      <g class="pin" data-id="ibis"><circle cx="640" cy="360" r="18" fill="#c4f000"/><text x="640" y="365" font-size="11" text-anchor="middle" fill="#0d0d0d">IB</text></g>
+      <g class="pin" data-id="era"><circle cx="780" cy="360" r="18" fill="#6b6b6b"/><text x="780" y="365" font-size="11" text-anchor="middle">ERA</text></g>
+      <g class="pin" data-id="quay"><circle cx="880" cy="120" r="22" fill="#0d0d0d" stroke="#c4f000" stroke-width="3"/><text x="880" y="125" font-size="12" text-anchor="middle">NQ</text></g>
+    </svg>
+  </div>
+
+  <div class="infobox idle" id="infobox">
+    <div class="ib-t">Tap a pin to inspect</div>
+    <div class="ib-m">MW = Marketown West · STR = The Store · DF = Dairy Farmers · NQ = Newcastle Quay</div>
+    <div class="ib-d">Each circle is a real project in the cluster. Lime = proposed / scoping, black = approved or under construction, lime-ringed = harbourside megaproject.</div>
+  </div>
+  <div class="maphint">Schematic only — relational layout, not surveyed positions.</div>
+</section>
+
+<section id="ledger">
+  <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">The Pipeline Ledger</span></div>
+  <p class="sec-intro">Your "2,500 in 400m" estimate was conservative. Once you total the cluster strung along ~600m of Hunter Street plus Marketown and the harbourside, the West End is absorbing something in the order of <b>3,500–4,000 dwellings</b>. Counts are approximate and shift with each revised DA.</p>
+  <div class="tbl-scroll">
+  <table class="ledger">
+    <thead><tr><th>Project</th><th>Where</th><th>Dwellings*</th><th>Height</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td class="proj">Marketown West</td><td>Parry St (the gateway)</td><td>~1,400</td><td>up to 29 st / ~90m</td><td><span class="st prop">Scoping / SSD</span></td></tr>
+      <tr><td class="proj">The Store</td><td>854 Hunter St</td><td>~352</td><td>30–31 st</td><td><span class="st build">Under constr. (~late 2026)</span></td></tr>
+      <tr><td class="proj">Dairy Farmers Towers</td><td>924 Hunter St</td><td>~184</td><td>27–30 st</td><td><span class="st build">Under construction</span></td></tr>
+      <tr><td class="proj">ONE Apartments</td><td>Hunter St cluster</td><td>~200+</td><td>high-rise</td><td><span class="st build">In delivery</span></td></tr>
+      <tr><td class="proj">WaterVue</td><td>643 Hunter St (old Empire)</td><td>~100+</td><td>mid-rise</td><td><span class="st build">Above-ground constr.</span></td></tr>
+      <tr><td class="proj">West Village / Waterscape</td><td>711 Hunter St (old Spotlight)</td><td>~191–267</td><td>up to 31 st / 90m</td><td><span class="st appr">Approved / revised</span></td></tr>
+      <tr><td class="proj">Ibis site</td><td>700 Hunter St</td><td>~165 + 85 hotel beds</td><td>14 + 17 st / 57.7m</td><td><span class="st prop">Scoping (seeks rezoning)</span></td></tr>
+      <tr><td class="proj">ERA</td><td>124–136 Bull St (NEX car park)</td><td>~281</td><td>15 st, dual tower</td><td><span class="st appr">Constr. anticipated 2026</span></td></tr>
+      <tr><td class="proj">Newcastle Quay</td><td>Honeysuckle harbourfront</td><td>~1,000</td><td>mixed, incl. tower</td><td><span class="st prop">Masterplan / site prep 2026</span></td></tr>
+    </tbody>
+    <tfoot><tr><td colspan="2">Cluster total (approx, rounded)</td><td>~3,500–4,000</td><td colspan="2">across ~9 projects</td></tr></tfoot>
+  </table>
+  </div>
+  <p style="font-family:'JetBrains Mono';font-size:11px;color:var(--grey);margin-top:12px;letter-spacing:.03em">* Dwelling counts are approximate, drawn from reporting at various dates, and several have been revised up or down through the planning process (e.g. 711 Hunter has ranged 258 → 267 → 262 → 191 as towers swapped between residential and office). Treat as order-of-magnitude.</p>
+</section>
+
+<section id="gov">
+  <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Who's Actually Planning For This?</span></div>
+  <p class="sec-intro">There <em>is</em> a hierarchy of plans that nominally covers cumulative growth in the city centre. The problem isn't an absence of documents — it's that the highest-impact projects are assessed individually through a state pathway that sits <em>outside</em> the local cumulative framework. Here's the stack, top to bottom, ending with the gap.</p>
+  <div class="stack">
+    <div class="layer">
+      <div class="who">State · DPHI</div>
+      <div><h4>Hunter Regional Plan 2041</h4><p>The 20-year regional blueprint. It explicitly names <b>Newcastle City Centre</b> as a high-growth area and is built on an "<b>infrastructure-first and place-based</b>" philosophy with "sequenced planning." It plans for ~101,800 dwellings region-wide and originally set Newcastle a 20-year target of ~17,850. This is the document that's <em>supposed</em> to manage exactly your concern.</p></div>
+    </div>
+    <div class="layer">
+      <div class="who">State · Housing Accord</div>
+      <div><h4>The revised 2029 target</h4><p>The accelerant. The state revised Newcastle's target to <b>11,100 dwellings by 2029</b> — ~2,220/year, roughly double the city's peak-period average. Council says this "compressed 62% of the previous 20-year target into just five years, disproportionately front-loading delivery." This is the policy engine behind the pile-up.</p></div>
+    </div>
+    <div class="layer">
+      <div class="who">Local · CN</div>
+      <div><h4>Newcastle 2040 + LSPS + Local Housing Strategy</h4><p>The council's own strategic layer: the Community Strategic Plan, the 20-year Local Strategic Planning Statement, and the housing strategy. These set the vision (most growth on infill / brownfield sites) and feed into the DCP. Real, but high-level — they steer rather than gate individual towers.</p></div>
+    </div>
+    <div class="layer">
+      <div class="who">Local · CN</div>
+      <div><h4>LEP 2012 + DCP 2023 + Urban Design Review Panel</h4><p>The site-level controls — height, FSR, design. The UDRP reviewed <b>17 projects in 2024 alone</b>, which shows the cluster <em>is</em> being looked at building-by-building. But these controls can be exceeded via the state pathway, and design review is not the same as precinct-wide cumulative impact assessment.</p></div>
+    </div>
+    <div class="layer gap">
+      <div class="who">⚠ The gap</div>
+      <div><h4>No single binding "precinct cumulative impact" gate</h4><p>Here's the hole. The marquee projects (Marketown, the Ibis site, parts of others) run through the <b>State Significant Development / Housing Delivery Authority</b> fast-track, where each is assessed largely <b>on its own merits</b>. There's no single statutory instrument that says "stop — model the combined traffic, school, sunlight, open-space and construction-disruption load of all ~4,000 dwellings together before approving the next one." Cumulative effects are addressed in fragments (each EIS, each TfNSW traffic study) rather than as one precinct ledger. That's the structural answer to your question.</p></div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="ctag">The council's own words</div>
+    <p>City of Newcastle has been unusually blunt: it argues the state target uses "<b>theoretical housing capacity modelling without considering the economic and environmental constraints impacting delivery</b>," and that councils "are not responsible for housing construction and have little control over delivery." Translation: the state sets the number, the market builds (or doesn't), and the infrastructure-first promise of the Regional Plan is the thing most at risk of slipping.</p>
+  </div>
+</section>
+
+<section id="downturn">
+  <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">The Downturn Question</span></div>
+  <p class="sec-intro">Your instinct — that developers hold back and stretch builds until prices suit them — is exactly right, and it's well documented. Approval is a <b>green light, not a contract to deliver</b>. Here's the mechanism, and why a staged precinct is especially exposed.</p>
+  <div class="flow">
+    <div class="fcard"><div class="step">1</div><h4>Approval ≠ commencement</h4><p>The phase between planning approval and actually breaking ground is the under-examined danger zone. A site can sit DA-approved for years.</p></div>
+    <div class="fcard"><div class="step">2</div><h4>The go / no-go test</h4><p>At commencement the developer re-checks viability: construction costs, finance covenants, pre-sales. If margins or pre-sales fall short, the project stalls.</p></div>
+    <div class="fcard"><div class="step">3</div><h4>The four levers</h4><p>In a downturn a developer can: <b>hold</b> the site until conditions improve; <b>sell</b> it DA-approved; <b>redesign</b> and re-lodge (often for more dwellings or lower cost); or <b>slow-release</b> stages.</p></div>
+    <div class="fcard"><div class="step">4</div><h4>Staging makes it worse</h4><p>Apartment peak-debt exposure is huge, so later stages only launch when earlier ones pre-sell. A soft market freezes the back end — leaving residents beside an unfinished site.</p></div>
+  </div>
+  <div class="callout teal">
+    <div class="ctag">It's already visible locally</div>
+    <p>This isn't theoretical for the West End. The 711 Hunter Street site alone has cycled through owners and designs — St Hilliers' <b>insolvency in 2024</b> killed an approved 258-apartment scheme, the site was sold "DA-approved," and the new proponent re-lodged a revised plan that <b>swapped a residential tower for an office block</b> after a tenant pre-commitment. That's three of the four levers — sell, redesign, re-lodge — playing out on a single block.</p>
+    <p>Nationally, builders are flagging "<b>a significant drop-off in workbook</b>" with not many large apartment projects coming out of the ground, apprentice completions at a decade low, and builder insolvencies stalling approved towers. The macro backdrop is precisely the one that stretches staged precincts.</p>
+  </div>
+  <div class="verdict">
+    <h4>So — do the builds get extended? Yes, and here's the asymmetry</h4>
+    <p><b>The developer holds the timing option, the resident holds the risk.</b> Approvals come with clocks (the SSD pathway forces a start within ~2 years of declaration), but "start" can mean Stage 1 only — and nothing compels the back stages to follow on schedule if the market turns. A developer rationally launches each stage when pre-sales and margins support it, not when the early buyers next door would like the cranes gone.</p>
+    <p><b>The Newcastle Mall pattern, restated structurally:</b> front-loaded sales, back-loaded delivery, with completion of the public realm and final towers contingent on a market that may not cooperate. The mitigants are a single accountable developer per precinct (Region Group, DOMA) and any enforceable delivery commitments baked into a voluntary planning agreement or consent conditions — which is exactly what to read for before buying off-the-plan.</p>
+    <p><b>The cruel irony for your cumulative-impact question:</b> a downturn that stretches the builds also <em>spreads</em> the disruption over more years, while the state's compressed target keeps pushing new approvals in. You can simultaneously have "not enough getting built to hit the target" and "every resident living beside a building site for a decade." Both are symptoms of the same thing — delivery driven by developer viability, not by a sequenced, infrastructure-first plan that's actually binding.</p>
+  </div>
+</section>
+
+<div class="backlink"><a href="marketown-timeline.html">Back: The Western Gateway Reckoning — the Marketown timeline</a></div>
+
+<footer>
+  <p class="foot-note"><b>About this piece.</b> Compiled May 2026 from NSW and City of Newcastle planning sources and property-sector reporting. Dwelling counts, heights and statuses are approximate, drawn from reporting at different dates, and change through the planning process. The map is a schematic relational diagram, not a surveyed plan. Personal analysis and general information for your own research — not planning, financial or legal advice.</p>
+  <div class="srcgrid">
+    <a href="https://www.planning.nsw.gov.au/plans-for-your-area/regional-plans/hunter-regional-plan-2041" target="_blank" rel="noopener">NSW Planning — Hunter Regional Plan 2041</a>
+    <a href="https://newcastle.nsw.gov.au/about-us/news-and-updates/latest-news/increased-infrastructure-investment-needed-to-fast-track-housing-growth" target="_blank" rel="noopener">City of Newcastle — Infrastructure investment / 62% compression statement</a>
+    <a href="https://www.newcastleherald.com.au/story/9095422/newcastle-council-unlikely-to-meet-the-states-housing-target/" target="_blank" rel="noopener">Newcastle Herald — Council unlikely to meet state housing target</a>
+    <a href="https://www.newcastleherald.com.au/story/9018019/urban-boom-550m-developments-changes-newcastles-skyline-nsw/" target="_blank" rel="noopener">Newcastle Herald — Urban boom: $550m developments change the skyline</a>
+    <a href="https://www.cessnockadvertiser.com.au/story/9150929/newcastles-the-store-and-dairy-farmers-set-to-reshape-skyline/" target="_blank" rel="noopener">Newcastle Herald — Major high-rise buildings due in 2026</a>
+    <a href="https://www.theurbandeveloper.com/articles/newcastle-two-tower-plans-hunter-street-nsw" target="_blank" rel="noopener">The Urban Developer — 711 Hunter St rethink (homes → offices)</a>
+    <a href="https://www.cessnockadvertiser.com.au/story/9189910/newcastle-west-ibis-site-rezoning-seeks-17-storey-towers/" target="_blank" rel="noopener">Newcastle Herald — Ibis site rezoning, 17-storey towers</a>
+    <a href="https://www.propertycouncil.com.au/media-releases/newcastle-ssd-boost-more-than-1400-homes-now-in-the-pipeline" target="_blank" rel="noopener">Property Council — Newcastle SSD boost / HDA pipeline</a>
+    <a href="https://www.macrobusiness.com.au/2025/10/australia-braces-for-residential-construction-downturn/" target="_blank" rel="noopener">MacroBusiness — Australia braces for residential construction downturn</a>
+    <a href="https://www.tandfonline.com/doi/full/10.1080/08111146.2026.2648835" target="_blank" rel="noopener">Urban Policy &amp; Research — Apartment development timelines (Melbourne)</a>
+    <a href="https://newcastle.nsw.gov.au/development/land-use-planning/urban-planning-documents" target="_blank" rel="noopener">City of Newcastle — Strategic planning documents (LSPS, Broadmeadow)</a>
+    <a href="https://www.newcastleherald.com.au/story/9253061/newcastle-1bn-marketown-west-plan-to-reshape-city-skyline/" target="_blank" rel="noopener">Newcastle Herald — Marketown West $1bn plan</a>
+  </div>
+</footer>
+
+<script>
+const data = {
+  market:{t:"Marketown West",m:"PROPOSED · SSD scoping · Region Group",d:"The anchor. ~1,400 apartments in 6 towers up to ~90m on the Parry St 'western gateway'. Running through the state SSD/HDA fast-track, seeking height (35→90m) and FSR (4:1→6.25:1) well above local controls."},
+  wv:{t:"West Village / Waterscape",m:"APPROVED, now revised · 711 Hunter St",d:"The old Spotlight/Waltons site. Approved as 267 apts (2 towers, 90m), but after St Hilliers' 2024 insolvency the new scheme swapped a residential tower for an office block — now ~191 apts. A live case study in downturn-driven redesign."},
+  dairy:{t:"Dairy Farmers Towers",m:"UNDER CONSTRUCTION · 924 Hunter St · Thirdi",d:"~184 apartments across 27–30 storey twin towers, reimagining the heritage glass milk-bottle and clock. Thirdi's fourth West End project."},
+  one:{t:"ONE Apartments",m:"IN DELIVERY · Hunter St cluster",d:"Part of the eye-catching cluster of towers reshaping the central Hunter Street core. ~200+ dwellings."},
+  store:{t:"The Store",m:"UNDER CONSTRUCTION · 854 Hunter St · DOMA",d:"~352 apartments, 30–31 storeys — the tallest approved building in the CBD, next to the Interchange. Tracking to completion around late 2026; east tower past level 15."},
+  wvue:{t:"WaterVue",m:"UNDER CONSTRUCTION · 643 Hunter St",d:"On the former Empire Hotel corner at Steel St. 100+ apartments; above-ground construction underway."},
+  ibis:{t:"Ibis Site",m:"PROPOSED · scoping · 700 Hunter St",d:"Seeks to demolish the Ibis hotel for two towers (14 + 17 storeys, 57.7m — more than double the 24m limit), ~165 apartments plus 85 hotel beds and a ground-floor pub. Argues it can only deliver affordable housing 'if they build tall'."},
+  era:{t:"ERA",m:"APPROVED · constr. anticipated 2026 · 124–136 Bull St · GWH",d:"15-storey dual-tower development in the former NEX car park — ~281 apartments."},
+  quay:{t:"Newcastle Quay",m:"MASTERPLAN · site prep 2026 · DOMA",d:"The $1.6bn final stage of Honeysuckle on the harbourfront. ~1,000 homes plus hotel, conference centre, cinema and retail, over ~15 years and six stages. The cluster's harbourside counterweight."}
+};
+const box = document.getElementById('infobox');
+document.querySelectorAll('.pin').forEach(p=>{
+  p.addEventListener('click',()=>{
+    const d = data[p.dataset.id]; if(!d) return;
+    box.classList.remove('idle');
+    box.innerHTML = `<div class="ib-t">${d.t}</div><div class="ib-m">${d.m}</div><div class="ib-d">${d.d}</div>`;
+  });
+});
+</script>
+</body>
+</html>

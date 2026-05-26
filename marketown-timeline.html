@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Western Gateway Reckoning — Newy Thoughts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Expanded:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0d0d;--paper:#ffffff;--accent:#c4f000;--accent-ink:#0d0d0d;
+    --grey:#8a8a8a;--grey-2:#bcbcbc;--line:#0d0d0d;--hair:#dcdcdc;--wash:#f5f5f5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:'Archivo',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+
+  .topbar{border-bottom:1px solid var(--line);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:var(--paper);z-index:50}
+  .topbar .mark{font-family:'Archivo Expanded';font-weight:800;font-size:14px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+  .topbar .mark .y{color:var(--accent-ink);background:var(--accent);padding:0 4px}
+  .topbar .back{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .15s}
+  .topbar .back:hover{border-color:var(--accent);border-bottom-width:3px}
+  .topbar .back::before{content:"← "}
+
+  header{padding:64px 32px 0;max-width:1180px;margin:0 auto}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);display:inline-block;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  h1{font-family:'Archivo Expanded';font-weight:900;font-size:clamp(2.6rem,8vw,6rem);line-height:.86;letter-spacing:-.03em;text-transform:uppercase;margin:16px 0 0}
+  .standfirst{font-size:clamp(1rem,1.8vw,1.3rem);font-weight:400;max-width:720px;margin-top:26px;line-height:1.5;color:#333}
+  .standfirst em{font-style:italic;color:var(--ink)}
+  .meta-row{margin-top:28px;display:flex;flex-wrap:wrap;gap:10px 30px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);border-top:1px solid var(--line);border-bottom:1px solid var(--hair);padding:14px 0}
+  .meta-row b{color:var(--ink);font-weight:700}
+
+  .glance{max-width:1180px;margin:36px auto 0;padding:0 32px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line)}
+  .stat{padding:22px 20px;border-right:1px solid var(--hair)}
+  .stat:last-child{border-right:none}
+  .stat .num{font-family:'Archivo Expanded';font-weight:800;font-size:2.4rem;line-height:1;color:var(--ink)}
+  .stat .num.acc{color:var(--ink);background:linear-gradient(var(--accent),var(--accent)) no-repeat;background-size:100% .35em;background-position:0 85%}
+  .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:10px;color:var(--grey);line-height:1.4}
+
+  section{max-width:1180px;margin:0 auto;padding:60px 32px 0}
+  .sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px;border-bottom:1px solid var(--line);padding-bottom:14px}
+  .sec-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink);font-weight:700;letter-spacing:.1em;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .sec-title{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(1.4rem,3.2vw,2.2rem);text-transform:uppercase;letter-spacing:-.01em;line-height:1}
+  .sec-intro{font-size:1.05rem;font-weight:400;max-width:800px;margin:20px 0 12px;color:#333;line-height:1.6}
+  .sec-intro em{font-style:italic}
+
+  .legend{display:flex;flex-wrap:wrap;gap:18px;margin:26px 0 30px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;display:inline-block;flex:none}
+  .dot.past{background:var(--grey-2)}.dot.now{background:var(--accent)}.dot.future{background:var(--ink)}.dot.risk{background:var(--ink);border:2px solid var(--accent)}
+
+  .timeline{position:relative;margin-left:8px}
+  .timeline::before{content:"";position:absolute;left:21px;top:8px;bottom:30px;width:1px;background:var(--ink)}
+  .tnode{position:relative;padding:0 0 14px 64px;margin-bottom:2px}
+  .tmarker{position:absolute;left:13px;top:5px;width:18px;height:18px;border-radius:50%;background:var(--paper);border:1px solid var(--ink);z-index:2;transition:all .2s}
+  .tnode.past .tmarker{background:var(--grey-2);border-color:var(--grey-2)}
+  .tnode.now .tmarker{background:var(--accent);border-color:var(--accent)}
+  .tnode.future .tmarker{background:var(--paper);border-color:var(--ink)}
+  .tnode.risk .tmarker{background:var(--paper);border:2px solid var(--accent)}
+  .tbtn{width:100%;text-align:left;background:var(--paper);border:1px solid var(--hair);padding:16px 20px;cursor:default;transition:all .2s;font-family:inherit;color:inherit;display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .tbtn:hover{border-color:var(--ink);background:var(--wash)}
+  .tbtn[aria-expanded="true"]{border-color:var(--ink);background:var(--ink);color:var(--paper)}
+  .tdate{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:700;display:inline-block;margin-bottom:5px;border-bottom:3px solid var(--accent);padding-bottom:1px}
+  .tbtn[aria-expanded="true"] .tdate{color:var(--accent);border-bottom-color:transparent}
+  .ttitle{font-family:'Archivo Expanded';font-weight:700;font-size:1.08rem;line-height:1.15;letter-spacing:-.01em;text-transform:uppercase}
+  .tchev{font-family:'JetBrains Mono';font-size:1.3rem;transition:transform .3s ease;flex:none;line-height:1;color:var(--grey)}
+  .tbtn[aria-expanded="true"] .tchev{transform:rotate(45deg);color:var(--paper)}
+  .tbody{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.2,.7,.2,1);background:var(--wash);border:1px solid var(--hair);border-top:none}
+  .tbody-inner{padding:8px 24px 22px}
+  .tbody p{font-size:.95rem;margin-bottom:11px;color:#333}
+  .tbody p.lede{font-weight:500;font-size:1.02rem;color:var(--ink);border-bottom:1px solid var(--hair);padding-bottom:14px;margin-bottom:14px}
+  .tbody ul{margin:0 0 12px 2px;list-style:none}
+  .tbody li{font-size:.92rem;padding:4px 0 4px 22px;position:relative;color:#333}
+  .tbody li::before{content:"—";position:absolute;left:0;color:var(--ink)}
+  .tag{display:inline-block;font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border:1px solid var(--hair);margin:0 6px 6px 0;background:var(--paper);color:var(--grey)}
+  .tag.hot{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  .src{margin-top:14px;padding-top:12px;border-top:1px solid var(--hair);font-family:'JetBrains Mono';font-size:11px;letter-spacing:.02em;color:var(--grey)}
+  .src a{color:var(--ink);text-decoration:none;border-bottom:3px solid var(--accent);transition:all .15s;word-break:break-word}
+  .src a:hover{background:var(--accent);color:var(--accent-ink)}
+  .src .sl{display:block;margin-bottom:6px}
+  .src .sl::before{content:"→ ";color:var(--ink)}
+
+  .vs{display:grid;grid-template-columns:1fr auto 1fr;margin:26px 0 0;align-items:stretch;border:1px solid var(--line)}
+  .vcard{padding:26px 24px;position:relative}
+  .vcard.a{border-right:1px solid var(--hair)}
+  .vcard h3{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-bottom:8px}
+  .vcard .big{font-family:'Archivo Expanded';font-weight:900;font-size:2.1rem;line-height:1;margin-bottom:2px;text-transform:uppercase}
+  .vcard.a .big{color:var(--grey)}.vcard.b .big{color:var(--ink);background:linear-gradient(var(--accent),var(--accent)) no-repeat;background-size:100% .3em;background-position:0 88%}
+  .vcard .sub{font-family:'JetBrains Mono';font-size:11px;color:var(--grey);margin-bottom:18px}
+  .vcard ul{list-style:none}
+  .vcard li{font-size:.88rem;padding:6px 0 6px 18px;position:relative;border-top:1px solid var(--hair)}
+  .vcard li:first-child{border-top:none}
+  .vcard li::before{content:"—";position:absolute;left:0;color:var(--ink)}
+  .vsmid{display:flex;align-items:center;justify-content:center;background:var(--ink);color:var(--paper);font-family:'Archivo Expanded';font-weight:900;font-size:.95rem;padding:0 14px;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.1em}
+
+  .verdict{background:var(--ink);color:var(--paper);padding:30px 32px;margin-top:0;border-top:3px solid var(--accent)}
+  .verdict h4{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .verdict p{font-size:1rem;line-height:1.6;margin-bottom:12px;color:#e4e4e4}
+  .verdict p:last-child{margin-bottom:0}
+  .verdict b{color:#fff;font-weight:600}
+
+  .stack{display:grid;gap:0;margin-top:24px;border:1px solid var(--line)}
+  .layer{padding:22px 24px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;border-bottom:1px solid var(--hair);transition:background .2s}
+  .layer:last-child{border-bottom:none}
+  .layer:hover{background:var(--wash)}
+  .layer .lvl{font-family:'Archivo Expanded';font-weight:900;font-size:1.4rem;color:var(--ink);min-width:50px;display:inline-block}.layer .lvl{background:linear-gradient(var(--accent),var(--accent)) no-repeat;background-size:1.1em .3em;background-position:0 80%}
+  .layer h4{font-family:'Archivo Expanded';font-weight:700;font-size:1.02rem;margin-bottom:5px;text-transform:uppercase;letter-spacing:-.01em}
+  .layer p{font-size:.92rem;color:#333}
+  .layer.highlight{background:var(--ink);color:var(--paper)}
+  .layer.highlight:hover{background:var(--ink)}
+  .layer.highlight .lvl{color:var(--accent)}
+  .layer.highlight p{color:#dcdcdc}
+  .layer.highlight b{color:#fff}
+
+  .callout{border:1px solid var(--line);border-left:4px solid var(--accent);padding:24px 26px;margin-top:24px;background:var(--wash)}
+  .callout.teal{border-left-color:var(--ink)}
+  .callout .ctag{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);font-weight:700;margin-bottom:10px;display:inline-block;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .callout.teal .ctag{color:var(--ink)}
+  .callout p{font-size:.96rem;color:#333;margin-bottom:9px}
+  .callout p:last-child{margin-bottom:0}
+  .callout b{color:var(--ink)}
+
+  footer{max-width:1180px;margin:72px auto 0;padding:32px 32px 60px;border-top:1px solid var(--line)}
+  .foot-note{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.04em;color:var(--grey);line-height:1.8;max-width:740px}
+  .foot-note b{color:var(--ink)}
+  .srcgrid{margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:0;border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+  .srcgrid a{font-family:'JetBrains Mono';font-size:10.5px;color:var(--ink);text-decoration:none;padding:11px 13px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);transition:all .15s;word-break:break-word;line-height:1.45}
+  .srcgrid a:hover{background:var(--accent);color:var(--accent-ink)}
+  .srcgrid a::before{content:"→ ";color:var(--ink)}
+  .srcgrid a:hover::before{color:var(--accent-ink)}
+  .backlink{max-width:1180px;margin:30px auto 0;padding:0 32px}
+  .backlink a{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);text-decoration:none;border-bottom:3px solid var(--accent);padding-bottom:2px}
+  .backlink a::before{content:"← "}
+
+  @media(max-width:680px){
+    .vs{grid-template-columns:1fr}
+    .vcard.a{border-right:none;border-bottom:1px solid var(--hair)}
+    .vsmid{writing-mode:horizontal-tb;padding:10px}
+    .layer{grid-template-columns:1fr;gap:6px}
+    .tnode{padding-left:52px}.timeline::before{left:17px}.tmarker{left:9px}
+    .stat{border-right:none;border-bottom:1px solid var(--hair)}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="mark" href="index.html">NEWY <span class="y">THOUGHTS</span></a>
+  <a class="back" href="index.html">Index</a>
+</div>
+
+<header>
+  <div class="kicker">01 / Newcastle West · Planning Dossier · May 2026</div>
+  <h1>The Western<br>Gateway Reckoning</h1>
+  <p class="standfirst">Two billion-dollar towers' worth of ambition are landing on opposite ends of Newcastle's CBD at the same moment — Marketown West and Newcastle Quay. Here's the timeline, the planning sleight-of-hand, and the question every future resident is actually asking: <em>how long am I going to live on a building site?</em></p>
+  <div class="meta-row">
+    <span><b>Marketown West:</b> ~$1bn · up to 1,400 apartments</span>
+    <span><b>Newcastle Quay:</b> $1.6bn · ~1,000 homes</span>
+    <span><b>Combined horizon:</b> 10–15 years</span>
+  </div>
+</header>
+
+<div class="glance">
+  <div class="stat"><div class="num acc">1,400</div><div class="lbl">Marketown apartments<br>(was 1,250)</div></div>
+  <div class="stat"><div class="num">6</div><div class="lbl">Towers now<br>(was 7)</div></div>
+  <div class="stat"><div class="num">90m</div><div class="lbl">Sought height<br>(limit is 35m)</div></div>
+  <div class="stat"><div class="num acc">~1,000</div><div class="lbl">Newcastle Quay homes</div></div>
+  <div class="stat"><div class="num">15</div><div class="lbl">Quay build-out, years</div></div>
+</div>
+
+<section id="timeline">
+  <div class="sec-head"><span class="sec-num">01</span><span class="sec-title">The Timeline</span></div>
+  <p class="sec-intro">Tap any moment to open the detail and the source it's drawn from. The line runs from settled history through the live decision point into the speculative build-out, with the overshadowing and disruption risks flagged.</p>
+  <div class="legend">
+    <span><i class="dot past"></i>Settled / past</span>
+    <span><i class="dot now"></i>Live decision</span>
+    <span><i class="dot future"></i>Projected / future</span>
+    <span><i class="dot risk"></i>Risk &amp; disruption flag</span>
+  </div>
+  <div class="timeline" id="tl"></div>
+</section>
+
+<section id="towers">
+  <div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Seven Towers → Six</span></div>
+  <p class="sec-intro">Between the August 2025 plan and the current scoping report, the scheme <em>gained</em> 150 apartments while <em>losing</em> a tower. More homes, fewer-but-taller structures. Your hunch — that it's partly developer economics — is right, but it's not the whole story.</p>
+  <div class="vs">
+    <div class="vcard a">
+      <h3>Aug 2025 — First reveal</h3>
+      <div class="big">7 towers</div>
+      <div class="sub">~1,250 apartments · podium retail</div>
+      <ul>
+        <li>More, slimmer towers spread across the 24,478m² site</li>
+        <li>Lower individual peaks, wider footprint of building bulk</li>
+        <li>Stage 1 floated at ~300 apartments in 2 towers</li>
+      </ul>
+    </div>
+    <div class="vsmid">REVISED</div>
+    <div class="vcard b">
+      <h3>May 2026 — Scoping report</h3>
+      <div class="big">6 towers</div>
+      <div class="sub">~1,400 apartments · up to 29 storeys</div>
+      <ul>
+        <li>Fewer towers, taller peaks (~90m), tallest pushed to NW corner</li>
+        <li>+150 apartments despite one less tower → higher FSR (6.25:1)</li>
+        <li>Stage 1 grown to ~400 apartments / ~53,000m² GFA</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict">
+    <h4>So — better for everyone, or just taller?</h4>
+    <p><b>The genuine upside:</b> fewer towers can mean more space between them, bigger gaps for light and sky-view, and more room at ground level for the plaza, the pedestrian bridge and through-site links. Concentrating bulk into slimmer point-towers (rather than fat slabs) is generally the better urban-design outcome — it's what the council's own design panel pushed for by recommending the tallest elements go to the north-western corner, away from neighbours.</p>
+    <p><b>The catch:</b> +150 apartments on a smaller tower count means more height and density per tower, and the people who actually lose daylight are named in the documents — <b>nearby Homes NSW (social housing) residents who get afternoon sun.</b> So the redesign is plausibly better for the public realm and for most future residents, while concentrating the downside on a specific, less-powerful set of existing neighbours. That's the equity question worth watching at exhibition.</p>
+    <p><b>And yes — economics.</b> Taller point-towers on a bigger FSR extract more saleable floor area from the same land Region Group bought for $150m in 2021. Fewer towers can also mean fewer, larger construction stages. Public benefit and developer margin happen to point the same way here; that alignment is exactly what the EIS and council submissions will test.</p>
+  </div>
+</section>
+
+<section id="dcp">
+  <div class="sec-head"><span class="sec-num">03</span><span class="sec-title">The DCP Question</span></div>
+  <p class="sec-intro">You asked whether this sits "outside Newcastle's DCP." Close — but the real mechanism is more interesting, and more contentious. The DCP isn't being ignored so much as <em>outranked.</em> Here's the stack of planning documents, top to bottom.</p>
+  <div class="stack">
+    <div class="layer">
+      <div class="lvl">A</div>
+      <div><h4>The LEP — Newcastle Local Environmental Plan 2012</h4><p>The <b>legally binding</b> rulebook. This is where the hard numbers live: the 35-metre height limit and the 4:1 floor space ratio that Marketown West currently sits under. Region Group wants these lifted to ~90m and 6.25:1. Changing an LEP normally requires a formal planning-proposal process through council.</p></div>
+    </div>
+    <div class="layer">
+      <div class="lvl">B</div>
+      <div><h4>The DCP — Development Control Plan 2023</h4><p>Sits <b>beneath</b> the LEP. It's the detailed design guidance — setbacks, overshadowing, street character, parking, the "how it should look and feel" layer. It <em>supports</em> the LEP rather than overriding it. DCP 2023 commenced 1 March 2024 and is tied to the Newcastle 2040 strategy. This is the document that codifies the city's own vision — so it's the thing most at risk of being bypassed.</p></div>
+    </div>
+    <div class="layer highlight">
+      <div class="lvl">C</div>
+      <div><h4>The override — State Significant Development via the Housing Development Authority</h4><p>Here's the move. Stage 1 was declared <b>State Significant Development (SSD)</b>, and the project is running through the NSW <b>Housing Development Authority</b> fast-track pathway. That shifts the consent authority from City of Newcastle to the <b>state</b> (DPHI), and lets the proposal seek height and FSR well beyond what the council's LEP/DCP allow. Council becomes a <em>consultee</em>, not the decision-maker.</p></div>
+    </div>
+  </div>
+  <div class="callout">
+    <div class="ctag">Why this matters for local governance</div>
+    <p>This is the live tension you care about: a state housing-acceleration pathway is being used to push density past locally-set controls on a site the council has spent <b>two-plus years</b> negotiating. The SSD declaration comes with strings — once declared, the planning process must start within <b>9 months</b> and, if approved, construction must begin within <b>2 years</b>. The state gets housing numbers; the city arguably loses some grip on the controls in its own DCP.</p>
+    <p>The council isn't powerless, though: its Urban Design Review Panel has already given <b>in-principle support</b> to taller heights (with conditions), so this isn't a straight council-vs-state fight — it's a negotiated landing where the council's leverage is design conditions rather than the height cap itself.</p>
+  </div>
+</section>
+
+<section id="quay">
+  <div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Newcastle Quay &amp; The Building-Site Decade</span></div>
+  <p class="sec-intro">Your real worry — the Newcastle Mall problem. Buy in early, then live next to hoarding and cranes for 5–10 years. So how do these two megaprojects actually phase, and is there any document tying them together spatially?</p>
+  <div class="callout teal">
+    <div class="ctag">Do they connect on paper? — Short answer: not directly, but they bookend the same CBD</div>
+    <p>There's no single masterplan document binding Marketown West and Newcastle Quay together — they're <b>different developers, different sites, different approval tracks.</b> Marketown West (Region Group) is the <b>western gateway</b> on Parry Street; Newcastle Quay (DOMA Group) is the final stage of the 30-year Honeysuckle harbourfront transformation, near the Newcastle Interchange. They're roughly the two ends of the same west-CBD spine, both leaning on the same NSW "housing on well-located land near transport" policy push. So they're <b>strategically linked by policy and geography, not by a shared plan.</b></p>
+  </div>
+  <div class="vs" style="margin-top:30px">
+    <div class="vcard a">
+      <h3>Marketown West — Region Group</h3>
+      <div class="big" style="color:var(--ink);background:linear-gradient(var(--accent),var(--accent)) no-repeat;background-size:100% .3em;background-position:0 88%">7–10 yrs</div>
+      <div class="sub">3 stages · start subject to SSD approval</div>
+      <ul>
+        <li>Stage 1: 2 towers, ~400 apartments, ~53,000m² — seeking detailed approval now</li>
+        <li>SSD rule: planning must start within 9 months; shovel within 2 years of declaration</li>
+        <li>Realistic earliest construction start: ~2026–27, finish ~2034–36</li>
+      </ul>
+    </div>
+    <div class="vsmid">VS</div>
+    <div class="vcard b">
+      <h3>Newcastle Quay — DOMA Group</h3>
+      <div class="big">~15 yrs</div>
+      <div class="sub">6 stages · site prep from 2026</div>
+      <ul>
+        <li>~1,000 homes, 180-room hotel, 500-seat conference centre, cinema, ~6,000m² retail</li>
+        <li>Site preparation works expected to begin 2026</li>
+        <li>Build-out across 6 stages over ~15 years → finish circa 2041</li>
+      </ul>
+    </div>
+  </div>
+  <div class="verdict">
+    <h4>The Newcastle Mall warning, applied</h4>
+    <p>Your instinct is well-founded, and the documents quietly confirm the exposure. <b>Both projects are explicitly staged over a decade-plus</b> — Quay over ~15 years and six stages, Marketown over 7–10 years and three. Staging is exactly the mechanism that produced the Mall problem: early buyers move in beside an active, multi-year construction zone next door, with no contractual guarantee the later stages finish on any particular date.</p>
+    <p><b>What to actually watch if buying in:</b> which <em>stage</em> a given building sits in, and what's scheduled to be built immediately adjacent <em>after</em> it. A Marketown Stage 1 apartment facing the Stage 2/3 footprint is the textbook "live on a building site" risk. The mitigations that exist on paper — staged public-domain delivery, the plaza and pedestrian bridge — tend to be back-loaded, which is precisely the trap at the Mall.</p>
+    <p><b>The structural difference from the Mall:</b> both of these are single-developer precincts (Region Group / DOMA) rather than fragmented multi-owner sites, which <em>can</em> mean more coherent sequencing and a clearer accountable party — if the developer holds the line on its own program. That's the optimistic case. The pessimistic case is a soft apartment market stalling later stages, leaving the public realm half-built. The EIS and any voluntary planning agreement are where delivery commitments (or the lack of them) will show up.</p>
+  </div>
+</section>
+
+<div class="backlink"><a href="west-end-cumulative.html">Next: The West End Pile-Up — the cumulative-impact picture</a></div>
+
+<footer>
+  <p class="foot-note"><b>About this piece.</b> Compiled May 2026 from public reporting and NSW/Newcastle planning sources. Figures are drawn from the lodged scoping report stage and remain subject to the EIS, exhibition and approval process — apartment counts, heights, stage boundaries and timelines can all shift. Dates marked "projected" are reasoned estimates from the staging windows in the source material, not official commitments. Personal analysis, not financial or legal advice.</p>
+  <div class="srcgrid">
+    <a href="https://www.newcastleherald.com.au/story/9253061/newcastle-1bn-marketown-west-plan-to-reshape-city-skyline/" target="_blank" rel="noopener">Newcastle Herald — $1bn Marketown West plan to reshape city skyline (May 2026)</a>
+    <a href="https://www.newcastleherald.com.au/story/9047688/marketown-newcastle-1250-apartments-seven-towers-planned/" target="_blank" rel="noopener">Newcastle Herald — Marketown: 1,250 apartments, seven towers planned (Aug 2025)</a>
+    <a href="https://foreveryield.com.au/major-redevelopment-planned-for-marketown-precinct-in-newcastle-west/" target="_blank" rel="noopener">Forever Yield — Major redevelopment planned for Marketown precinct</a>
+    <a href="https://www.theurbandeveloper.com/articles/newcastle-quay-honeysuckle-bay-redevelopment-developer-doma-group-masterpan-sjb" target="_blank" rel="noopener">The Urban Developer — DOMA picked for $1.6bn Newcastle Quay</a>
+    <a href="https://newcastleweekly.com.au/1-6b-honeysuckle-hq-to-deliver-homes-jobs-and-vibrant-waterfront" target="_blank" rel="noopener">Newcastle Weekly — Honeysuckle HQ / Newcastle Quay (site prep 2026, 15 yrs)</a>
+    <a href="https://architectureau.com/articles/Final-stage-of-Newcastles-30-year-foreshore-transformation-unveiled/" target="_blank" rel="noopener">ArchitectureAU — Final stage of Newcastle's foreshore transformation</a>
+    <a href="https://newcastle.nsw.gov.au/development/land-use-planning/development-control-plan-and-technical-manuals/development-control-plan-(dcp)" target="_blank" rel="noopener">City of Newcastle — Development Control Plan (DCP 2023)</a>
+    <a href="https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul" target="_blank" rel="noopener">inkl / Newcastle Herald — 1,400 apartments: latest Marketown details</a>
+  </div>
+</footer>
+
+<script>
+const nodes = [
+  {cls:'past',date:'1978',title:'Marketown West opens for trade',
+   lede:'The single-storey shopping centre that this whole plan would demolish has been trading on Parry Street since 1978 — nearly half a century of low-rise retail on a CBD-edge site.',
+   body:['It anchors the "western gateway" to the Newcastle city centre — a 24,478m² site long flagged as having unrealised potential but lagging the rest of the CBD\'s renewal.'],
+   tags:['Parry Street','24,478 m²'],
+   src:[['inkl / Newcastle Herald — latest Marketown details','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul']]},
+  {cls:'past',date:'2009',title:'Eastern Marketown approved',
+   lede:'Former owner Gennie Holdings won approval to develop the apartment-and-shopping complex on Marketown\'s eastern side — the half that already redeveloped.',
+   body:['This is why the new plan proposes a pedestrian bridge over Steel Street: it stitches the new western towers back to the existing Marketown East. Many observers assumed it was only a matter of time before the western side followed.'],
+   tags:['Marketown East','Precedent'],
+   src:[['Newcastle Herald — 1,250 apartments, seven towers planned','https://www.newcastleherald.com.au/story/9047688/marketown-newcastle-1250-apartments-seven-towers-planned/']]},
+  {cls:'past',date:'2021',title:'Region Group buys the site for $150m',
+   lede:'ASX-listed Region Group acquires the western Marketown precinct for $150 million, setting up more than a decade of speculation finally resolving into a plan.',
+   body:['The western precinct is anchored by Coles and Officeworks, with 29 specialty tenants and a ~300-space carpark. The purchase price matters: it\'s the number the eventual saleable floor area has to justify, which helps explain the push for higher FSR.'],
+   tags:['$150m','Coles + Officeworks','29 tenants'],
+   src:[['Forever Yield — Major redevelopment planned for Marketown','https://foreveryield.com.au/major-redevelopment-planned-for-marketown-precinct-in-newcastle-west/']]},
+  {cls:'past',date:'Aug 2025',title:'First reveal — 7 towers, 1,250 apartments',
+   lede:'Documents lodged with the state reveal the original vision: seven towers delivering up to 1,250 apartments over a retail podium. Stage 1 is declared State Significant Development.',
+   body:['The Housing Development Authority\'s SSD declaration streamlines the planning path — and starts a clock.','Once declared State Significant, the planning process must begin within 9 months.','If approved, construction must begin within 2 years.','The HDA cautioned the final yield may differ and that traffic/intersection upgrades would be required in consultation with City of Newcastle.'],
+   tags:['7 towers','1,250 apts','SSD declared','9-month clock'],
+   src:[['Newcastle Herald — 1,250 apartments, seven towers planned','https://www.newcastleherald.com.au/story/9047688/marketown-newcastle-1250-apartments-seven-towers-planned/'],['Forever Yield — coverage of the SSD declaration','https://foreveryield.com.au/major-redevelopment-planned-for-marketown-precinct-in-newcastle-west/']]},
+  {cls:'now',date:'May 2026 — NOW',title:'Scoping report lodged — 6 towers, 1,400 apartments',
+   lede:'Region Group lodges a formal scoping report with DPHI. The scheme has been reworked: six towers, up to ~1,400 apartments, peaks of ~29 storeys / ~90m. This is the live decision point.',
+   body:['Prepared by planning consultancy Urbis; concept design by Turner.','Seeks to lift the height limit from 35m to ~90m and FSR from 4:1 to 6.25:1.','Includes a King Street public plaza, a pedestrian bridge to Marketown East, ~2,350 car spaces, and affordable-housing contributions.','Council\'s Urban Design Review Panel gives in-principle support to taller heights, recommending the tallest elements go to the north-western corner.','Officers flag overshadowing concerns — especially of nearby Homes NSW residences that get afternoon sun.'],
+   tags:['hot::6 towers','hot::1,400 apts','90m sought','FSR 6.25:1'],
+   src:[['Newcastle Herald — $1bn Marketown West plan to reshape city skyline','https://www.newcastleherald.com.au/story/9253061/newcastle-1bn-marketown-west-plan-to-reshape-city-skyline/'],['inkl / Newcastle Herald — 1,400 apartments: latest details','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul']]},
+  {cls:'risk',date:'2026',title:'The constraints: subsidence, flood, traffic, shadow',
+   lede:'Before a brick moves, the site carries a stack of physical and amenity constraints that the EIS will have to resolve.',
+   body:['Subsidence Advisory NSW: the site sits within a mine subsidence district — detailed geotechnical investigation required.','The site is identified as flood-prone land (the report argues this is addressable at DA stage).','Transport for NSW wants a detailed traffic and parking assessment with any future application.','Overshadowing of afternoon sun to nearby Homes NSW residences is the headline amenity objection.'],
+   tags:['risk::Mine subsidence','risk::Flood-prone','risk::Traffic','risk::Overshadowing'],
+   src:[['inkl / Newcastle Herald — 1,400 apartments: latest details','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul']]},
+  {cls:'future',date:'2026 →',title:'Newcastle Quay site prep begins (the other end of town)',
+   lede:'At the harbourfront, DOMA Group\'s $1.6bn Newcastle Quay — the final stage of the 30-year Honeysuckle transformation — is expected to begin site preparation works in 2026.',
+   body:['~1,000 homes, a 180-room luxury hotel, a 500-seat conference centre, a cinema, ~6,000m² retail and 11,000m²+ of public space.','Masterplan led by SJB with Stewart Architecture, Curious Practice and others; developer DOMA Group, selected by HCCDC.','Pitched as shifting the waterfront "from the edge of the city to its centre."','Geographically this is the western-CBD counterpart to Marketown — same policy logic, different site and developer.'],
+   tags:['$1.6bn','~1,000 homes','Honeysuckle','DOMA Group'],
+   src:[['The Urban Developer — DOMA picked for Newcastle Quay','https://www.theurbandeveloper.com/articles/newcastle-quay-honeysuckle-bay-redevelopment-developer-doma-group-masterpan-sjb'],['Newcastle Weekly — Honeysuckle HQ to deliver 1,000 homes','https://newcastleweekly.com.au/1-6b-honeysuckle-hq-to-deliver-homes-jobs-and-vibrant-waterfront']]},
+  {cls:'future',date:'~2027',title:'Marketown Stage 1 — earliest realistic start',
+   lede:'PROJECTED. If the SSD process runs to its declared clock, construction on Stage 1 must begin within two years of the declaration — putting the earliest plausible shovel around 2026–27.',
+   body:['Stage 1 = two residential towers, ~400 apartments, ~53,000m² gross floor area — grown from the ~300-apartment figure in the 2025 plan.','This is the part seeking detailed approval now; later stages remain concept-level.','Date is an estimate derived from the SSD "shovel within 2 years" rule, not an official construction date.'],
+   tags:['future::Stage 1','~400 apts','Projected'],
+   src:[['inkl / Newcastle Herald — 1,400 apartments: latest details','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul'],['Newcastle Herald — SSD 2-year construction rule','https://www.newcastleherald.com.au/story/9047688/marketown-newcastle-1250-apartments-seven-towers-planned/']]},
+  {cls:'risk',date:'2027–2036',title:'The building-site decade (the Mall risk)',
+   lede:'PROJECTED. This is the window you flagged. Marketown is staged over 7–10 years across three stages; Quay over ~15 years across six. Early residents of both will live beside active construction for years.',
+   body:['Marketown Stage 1 buyers face Stage 2/3 construction on the same block after move-in — the precise "bought in, now living on a building site" scenario from Newcastle Mall.','Public-domain sweeteners (plaza, pedestrian bridge, through-site links) tend to be back-loaded to later stages.','Single-developer precincts (Region Group / DOMA) can sequence more coherently than fragmented sites — the optimistic case — but a soft apartment market could stall later stages, the pessimistic one.','Due-diligence rule of thumb: check which stage your building is in and what\'s scheduled to be built next to it afterwards.'],
+   tags:['risk::Staged 7–10 yrs','risk::Mall parallel','risk::Back-loaded amenity'],
+   src:[['inkl / Newcastle Herald — staging over 7–10 years','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul'],['Newcastle Weekly — Quay delivered over 15 years','https://newcastleweekly.com.au/1-6b-honeysuckle-hq-to-deliver-homes-jobs-and-vibrant-waterfront']]},
+  {cls:'future',date:'~2034–2041',title:'Completion horizon — both precincts',
+   lede:'PROJECTED. On the staging windows in the source material, Marketown finishes roughly 2034–36 and Newcastle Quay roughly 2041 — reshaping both ends of the west CBD within a single generation.',
+   body:['These are reasoned end-points from the 7–10 year (Marketown) and ~15 year (Quay) staging windows, not official completion dates.','Either could slip with market conditions, approval delays, or staging revisions — the same forces that stretched Newcastle Mall well beyond its original program.'],
+   tags:['future::Horizon','Projected','West CBD reshaped'],
+   src:[['inkl / Newcastle Herald — Marketown 7–10 year staging','https://www.inkl.com/news/1400-apartments-latest-details-revealed-for-gigantic-marketown-overhaul'],['The Urban Developer — Quay over 15 years','https://www.theurbandeveloper.com/articles/newcastle-quay-honeysuckle-bay-redevelopment-developer-doma-group-masterpan-sjb']]}
+];
+const tl = document.getElementById('tl');
+nodes.forEach((n,i)=>{
+  const tagHtml = n.tags.map(t=>`<span class="tag${t.startsWith('hot::')?' hot':''}">${t.replace(/^(hot|risk|future)::/,'')}</span>`).join('');
+  const bodyList = n.body.map(b=>`<li>${b}</li>`).join('');
+  const srcHtml = n.src.map(s=>`<span class="sl"><a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a></span>`).join('');
+  const node = document.createElement('div');
+  node.className = 'tnode '+n.cls;
+  node.innerHTML = `<div class="tmarker"></div>
+    <button class="tbtn" aria-expanded="false" aria-controls="tb${i}">
+      <span><span class="tdate">${n.date}</span><span class="ttitle">${n.title}</span></span>
+      <span class="tchev">+</span></button>
+    <div class="tbody" id="tb${i}"><div class="tbody-inner">
+      <p class="lede">${n.lede}</p><ul>${bodyList}</ul><div>${tagHtml}</div>
+      <div class="src">${srcHtml}</div></div></div>`;
+  tl.appendChild(node);
+});
+document.querySelectorAll('.tbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const open = btn.getAttribute('aria-expanded')==='true';
+    const body = btn.nextElementSibling;
+    btn.setAttribute('aria-expanded',String(!open));
+    body.style.maxHeight = open ? '0' : body.scrollHeight+'px';
+  });
+});
+</script>
+</body>
+</html>
